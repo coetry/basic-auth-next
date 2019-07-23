@@ -16,7 +16,11 @@ Protected.getInitialProps = async ({ req, res}) => {
 	props = { hello: 'world' }
 	return props
       } else {
+	res.writeHead(401, {
+	  'WWW-Authenticate': 'Basic realm=private page'
+	})
 	res.end('unauthorized')
+	return props
       }
     } else {
       res.writeHead(401, {
