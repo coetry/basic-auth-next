@@ -15,12 +15,13 @@ Protected.getInitialProps = async ({ req, res}) => {
       if (user === "cooluser" && password === "toughpassword") {
 	props = { hello: 'world' }
 	return props
+      } else {
+	res.end('unauthorized')
       }
     } else {
       res.writeHead(401, {
       'WWW-Authenticate': 'Basic realm=private page'
       })
-      res.end('unauthorized')
       return props
     }
   }
