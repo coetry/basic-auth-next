@@ -14,18 +14,14 @@ Protected.getInitialProps = async ({ req, res}) => {
       if (user === "cooluser" && password === "toughpassword") {
 	return { hello: 'world' }
       }
+    } else {
+      res.writeHead(401, {
+      'WWW-Authenticate': 'Basic realm=private page'
+      })
+      res.end('unauthorized')
+      return {}
     }
   }
-
-  // check for res, only available server side
-  if (res) {
-    res.writeHead(401, {
-      'WWW-Authenticate': 'Basic realm=private page'
-    })
-
-    res.end('unauthorized')
-  }
-  return {}
 }
 
 export default Protected
