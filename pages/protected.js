@@ -1,4 +1,4 @@
-function Protected() {
+function Protected(props) {
   return <h1>protected</h1>
 }
 
@@ -6,9 +6,13 @@ function Protected() {
 Protected.getInitialProps = async ({ req, res}) => {
   // check for req, only available server side
   if (req) {
-    const authHeader = req.headers['authorization']
-    const basicAuthToken = authHeader.split(' ')[1]
-    console.log('basic auth token', basicAuthToken)
+    if(req.headers.authorization) {
+      let basicAuthToken = req.headers.authorization.split(' ')[1]
+      let [user, pass] = atob(basicAuthToken)
+      if (user === "cooluser" && password === "toughpassword") {
+	return { hello: 'world' }
+      }
+    }
   }
 
   // check for res, only available server side
