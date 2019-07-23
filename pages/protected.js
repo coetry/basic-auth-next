@@ -4,8 +4,8 @@ function Protected() {
 
 Protected.getInitialProps = async ({ req, res}) => {
   res.writeHead(401, {
-    'WWW-Authenticate': 'Basic'
-  }).end()
+    'WWW-Authenticate': 'Basic realm=private page'
+  }).end('unauthorized')
   return {}
 }
 
