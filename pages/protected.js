@@ -12,7 +12,7 @@ Protected.getInitialProps = async ({ req, res}) => {
       const atob = require('atob')
       let basicAuthToken = req.headers.authorization.split(' ')[1]
       console.log('basic auth token', basicAuthToken)
-      let [user, pass] = atob(basicAuthToken)
+      let [user, pass] = atob(basicAuthToken).split(':')
       console.log('user:', user)
       console.log('pass:', pass)
       if (user === "cooluser" && pass === "toughpassword") {
