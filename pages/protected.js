@@ -5,6 +5,7 @@ function Protected(props) {
 
 Protected.getInitialProps = async ({ req, res}) => {
   // check for req, only available server side
+  let props = {}
   if (req) {
     if(req.headers.authorization) {
       // dynamically require atob module for server side node
@@ -12,16 +13,18 @@ Protected.getInitialProps = async ({ req, res}) => {
       let basicAuthToken = req.headers.authorization.split(' ')[1]
       let [user, pass] = atob(basicAuthToken)
       if (user === "cooluser" && password === "toughpassword") {
-	return { hello: 'world' }
+	props = { hello: 'world' }
+	return props
       }
     } else {
       res.writeHead(401, {
       'WWW-Authenticate': 'Basic realm=private page'
       })
       res.end('unauthorized')
-      return {}
+      return props
     }
   }
+  return props
 }
 
 export default Protected
